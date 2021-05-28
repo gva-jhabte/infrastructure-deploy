@@ -1,0 +1,82 @@
+substitutions:
+  # _LOCATION: 'europe-west2'
+  _REGION: 'europe-west4'
+  _STATE_BUCKET_NAME: 'infrastructure-al-state'
+  _PROJECT_NUMBER: '311966843135'
+
+steps:
+  - name: ubuntu
+    id: Build information
+    entrypoint: bash
+    args:
+      - '-c'
+      - |
+        echo \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+        echo BUILD DETAILS:
+        [ ! -z "${PROJECT_ID}" ]     && echo "Project ID:    ${PROJECT_ID}"
+        [ ! -z "${BUILD_ID}" ]       && echo "Build ID:      ${BUILD_ID}"
+        [ ! -z "${COMMIT_SHA}" ]     && echo "Commit SHA:    ${COMMIT_SHA}"
+        [ ! -z "${SHORT_SHA}" ]      && echo "Short SHA:     ${SHORT_SHA}"
+        [ ! -z "${REPO_NAME}" ]      && echo "Repo name:     ${REPO_NAME}"
+        [ ! -z "${BRANCH_NAME}" ]    && echo "Branch name:   ${BRANCH_NAME}"
+        [ ! -z "${TAG_NAME}" ]       && echo "Tag name:      ${TAG_NAME}"
+        [ ! -z "${REVISION_ID}" ]    && echo "Revision ID:   ${REVISION_ID}"
+        [ ! -z "${_HEAD_BRANCH}" ]   && echo "Head branch:   ${_HEAD_BRANCH}"
+        [ ! -z "${_BASE_BRANCH}" ]   && echo "Base branch:   ${_BASE_BRANCH}"
+        [ ! -z "${_HEAD_REPO_URL}" ] && echo "Head repo URL: ${_HEAD_REPO_URL}"
+        [ ! -z "${_PR_NUMBER}" ]     && echo "PR number:     ${_PR_NUMBER}"
+        echo \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+  #
+  # Prepare environment
+  #
+  - name: gcr.io/cloud-builders/git
+    id: Clean Workspace
+    entrypoint: sh
+    args:
+      - '-c'
+      - |
+        rm -rf *
+        rm -rf .[a-zA-Z_]*
+
+
+  # #
+  # # Deploy code
+  # #
+  - name: gcr.io/cloud-builders/git
+    id: Troubleshooting
+    entrypoint: sh
+    args:
+      - '-c'
+      - |
+        pwd
+        ls -lah
+
+  - name: hashicorp/terraform:0.12.17
+    id: Terraform init
+    args:
+      - 'init'
+      - '-backend-config'
+      - 'bucket=${_STATE_BUCKET_NAME}'
+    dir: ${_REPO_DIR}/infra/terraform
+
+  - name: hashicorp/terraform:0.12.17
+    id: Terraform plan
+    args:
+      - plan
+    dir: ${_REPO_DIR}/infra/terraform
+
+  - name: hashicorp/terraform:0.12.17
+    id: Terraform apply
+    args:
+      - 'apply'
+      - '--auto-approve'
+    dir: ${_REPO_DIR}/infra/terraform
+
+options:
+  env:
+    - 'TF_VAR_project_id=${PROJECT_ID}'
+    - 'TF_VAR_region=${_REGION}'
+    - 'TF_VAR_location=${_LOCATION}'
+    - 'TF_VAR_project_number=${_PROJECT_NUMBER}'    
+
+timeout: 3600s # 60min, overriding the default 10min build timeout
