@@ -53,6 +53,14 @@ steps:
         ls -lah
         ls -lah /workspace
 
+  - name: gcr.io/cloud-builders/git
+    id: checking what's inside infra
+    args:
+      - '-c'
+      - |
+        'ls -lah'
+    dir: infra/
+
   - name: hashicorp/terraform:0.12.17
     id: Terraform init
     args:
