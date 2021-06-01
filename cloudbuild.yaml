@@ -60,7 +60,7 @@ steps:
       - '-c'
       - |
         ls -lah
-    dir: infra/
+    dir: infra
 
   - name: hashicorp/terraform:0.12.17
     id: Terraform init
@@ -68,20 +68,20 @@ steps:
       - 'init'
       - '-backend-config'
       - 'bucket=${_STATE_BUCKET_NAME}'
-    dir: infra/
+    dir: infra
 
   - name: hashicorp/terraform:0.12.17
     id: Terraform plan
     args:
       - plan
-    dir: infra/
+    dir: infra
 
-  - name: hashicorp/terraform:0.12.17
-    id: Terraform apply
-    args:
-      - 'apply'
-      - '--auto-approve'
-    dir: infra/
+  # - name: hashicorp/terraform:0.12.17
+  #   id: Terraform apply
+  #   args:
+  #     - 'apply'
+  #     - '--auto-approve'
+  #   dir: infra
 
 options:
   env:
