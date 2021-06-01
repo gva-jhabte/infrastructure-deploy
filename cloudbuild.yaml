@@ -3,6 +3,7 @@ substitutions:
   _REGION: 'europe-west4'
   _STATE_BUCKET_NAME: 'infrastructure-al-state'
   _PROJECT_NUMBER: '311966843135'
+  _REPO_DIR: infrastructure-deploy
 
 steps:
   - name: ubuntu
