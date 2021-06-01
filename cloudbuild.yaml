@@ -51,6 +51,7 @@ steps:
       - |
         pwd
         ls -lah
+        ls -lah /workspace
 
   - name: hashicorp/terraform:0.12.17
     id: Terraform init
