@@ -28,18 +28,6 @@ steps:
         [ ! -z "${_PR_NUMBER}" ]     && echo "PR number:     ${_PR_NUMBER}"
         echo \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
 
-  # Prepare environment
-  #
-  - name: gcr.io/cloud-builders/git
-    id: Clean Workspace
-    entrypoint: sh
-    args:
-      - '-c'
-      - |
-        rm -rf *
-        rm -rf .[a-zA-Z_]*
-
-
   # #
   # # Deploy code
   # #
