@@ -6,7 +6,7 @@ substitutions:
   _REPO_DIR: infrastructure-deploy
 
 steps:
-  - name: ubuntu
+  - name: marketplace.gcr.io/google/centos7
     id: Build information
     entrypoint: bash
     args:
@@ -27,7 +27,7 @@ steps:
         [ ! -z "${_HEAD_REPO_URL}" ] && echo "Head repo URL: ${_HEAD_REPO_URL}"
         [ ! -z "${_PR_NUMBER}" ]     && echo "PR number:     ${_PR_NUMBER}"
         echo \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
-  #
+
   # Prepare environment
   #
   - name: gcr.io/cloud-builders/git
