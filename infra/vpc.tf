@@ -1,15 +1,3 @@
-provider "google" {
-  version = "~> 3.43.0"
-  region  = var.region
-  project = var.project
-}
-
-provider "google-beta" {
-  version = "~> 3.43.0"
-  region  = var.region
-  project = var.project
-}
-
 # making the vpc and other relevant areas
 
 resource "google_compute_network" "peering_network" {
@@ -69,7 +57,7 @@ resource "google_sql_database_instance" "master" {
     # type. See argument reference below.
     tier = "db-custom-4-26624"
     ip_configuration {
-      ipv4_enabled    = false
+      ipv4_enabled    = true
       private_network = google_compute_network.peering_network.id
       require_ssl     = true
     }

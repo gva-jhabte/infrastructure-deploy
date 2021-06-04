@@ -50,7 +50,7 @@ steps:
         ls -lah
     dir: infra
 
-  - name: hashicorp/terraform:0.12.17
+  - name: hashicorp/terraform:0.14.7
     id: Terraform init
     args:
       - 'init'
@@ -58,7 +58,7 @@ steps:
       - 'bucket=${_STATE_BUCKET_NAME}'
     dir: infra
 
-  - name: hashicorp/terraform:0.12.17
+  - name: hashicorp/terraform:0.14.7
     id: Terraform plan
     args:
       - plan

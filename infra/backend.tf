@@ -1,6 +1,11 @@
 terraform {
   backend "gcs" {
-    bucket  = "infrastructure-al-state"
     prefix  = "vpc/state"
+  }
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = "~> 3.43.0"
+    }
   }
 }
