@@ -64,12 +64,12 @@ steps:
       - plan
     dir: infra
 
-  # - name: hashicorp/terraform:0.12.17
-  #   id: Terraform apply
-  #   args:
-  #     - 'apply'
-  #     - '--auto-approve'
-  #   dir: infra
+  - name: hashicorp/terraform:0.12.17
+    id: Terraform apply
+    args:
+      - 'apply'
+      - '--auto-approve'
+    dir: infra
 
 options:
   env:
