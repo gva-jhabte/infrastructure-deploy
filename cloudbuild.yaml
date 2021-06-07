@@ -64,7 +64,7 @@ steps:
       - plan
     dir: infra
 
-  - name: hashicorp/terraform:0.14.17
+  - name: hashicorp/terraform:0.14.7
     id: Terraform apply
     args:
       - 'apply'
