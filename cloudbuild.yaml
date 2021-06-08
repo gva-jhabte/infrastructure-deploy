@@ -1,10 +1,8 @@
 substitutions:
   # _LOCATION: 'europe-west2'
   _REGION: 'europe-west4'
-  _STATE_BUCKET_NAME: 'infrastructure-al-state'
-  _PROJECT_NUMBER: '311966843135'
-  _REPO_DIR: infrastructure-deploy
-
+  _STATE_BUCKET_NAME: 'infrastructure-state'
+  _PROJECT_NUMBER: '642161594262'
 steps:
   - name: marketplace.gcr.io/google/centos7
     id: Build information

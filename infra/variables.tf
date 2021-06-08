@@ -1,7 +1,7 @@
 variable "project" {
   description = "The project ID to create the resources in."
   type        = string
-  default       = "jon-deploy-project"
+  default       = "dcsgva-lab-sandbox-jonathan"
 }
 
 variable "region" {
