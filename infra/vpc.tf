@@ -57,7 +57,7 @@ resource "google_sql_database_instance" "master" {
     # type. See argument reference below.
     tier = "db-custom-4-26624"
     ip_configuration {
-      ipv4_enabled    = true
+      ipv4_enabled    = false
       private_network = google_compute_network.peering_network.id
       require_ssl     = true
     }
