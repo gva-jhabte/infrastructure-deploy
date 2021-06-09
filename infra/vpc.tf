@@ -42,6 +42,7 @@ resource "google_service_networking_connection" "foobar" {
 resource "google_cloud_tasks_queue" "default" {
   name = "my-queue"
   location = "europe-west1"
+  project = var.project
 }
 
 # making the sql instance
