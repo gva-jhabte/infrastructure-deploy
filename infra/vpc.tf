@@ -28,6 +28,7 @@ resource "google_vpc_access_connector" "connector" {
   ip_cidr_range = "10.3.0.0/28"
   network       = google_compute_network.peering_network.name
   region        = var.region
+  max_throughput = 1000
 }
 
 resource "google_service_networking_connection" "foobar" {
