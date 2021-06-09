@@ -40,7 +40,7 @@ resource "google_service_networking_connection" "foobar" {
 # making the cloud task queue
 
 resource "google_cloud_tasks_queue" "default" {
-  name = "my-queue"
+  name = "service-queue"
   location = "europe-west1"
   project = var.project
 }
