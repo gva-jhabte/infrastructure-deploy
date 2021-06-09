@@ -3,6 +3,7 @@ substitutions:
   _REGION: 'europe-west4'
   _STATE_BUCKET_NAME: 'infrastructure-state'
   _PROJECT_NUMBER: '642161594262'
+  _PROJECT: 'dcsgva-lab-sandbox-jonathan'
 steps:
   - name: marketplace.gcr.io/google/centos7
     id: Build information
@@ -74,6 +75,7 @@ options:
     - 'TF_VAR_project_id=${PROJECT_ID}'
     - 'TF_VAR_region=${_REGION}'
     - 'TF_VAR_location=${_LOCATION}'
-    - 'TF_VAR_project_number=${_PROJECT_NUMBER}'    
+    - 'TF_VAR_project_number=${_PROJECT_NUMBER}'
+    - 'TF_VAR_project=${_PROJECT}'   
 
 timeout: 3600s # 60min, overriding the default 10min build timeout
