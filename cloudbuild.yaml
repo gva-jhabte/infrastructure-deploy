@@ -1,9 +1,8 @@
 substitutions:
-  # _LOCATION: 'europe-west2'
   _REGION: 'europe-west4'
-  _STATE_BUCKET_NAME: 'infrastructure-state'
-  _PROJECT_NUMBER: '642161594262'
-  _PROJECT: 'dcsgva-lab-sandbox-jonathan'
+  _STATE_BUCKET_NAME: 'dcsgva-connects-tst-services-state'
+  _PROJECT_NUMBER: '938981631422'
+  _PROJECT: 'dcsgva-connects-state'
   _INSTANCE_NAME: state-database
 steps:
   - name: marketplace.gcr.io/google/centos7
@@ -81,14 +80,18 @@ steps:
   #       gcloud beta sql ssl server-ca-certs create --instance=${_INSTANCE_NAME}
   #       gcloud beta sql ssl server-ca-certs list --format="value(cert)" \
   #       --instance=${_INSTANCE_NAME} > server-ca.pem
+  #       #
+  #       gcloud sql ssl client-certs create client-cert client-key.pem --instance=${_INSTANCE_NAME}
+  #       gcloud sql ssl client-certs describe client-cert --instance=${_INSTANCE_NAME} --format="value(cert)" > client-cert.pem
+  #       gcloud sql instances describe ${_INSTANCE_NAME} --format="value(serverCaCert.cert)" > server-ca.pem
 
-  - name: gcr.io/cloud-builders/gcloud
-    id: Getting certs
-    entrypoint: sh
-    args:
-      - '-c'
-      - |
-        gcloud beta sql ssl server-ca-certs list --instance=${_INSTANCE_NAME}
+  # - name: gcr.io/cloud-builders/gcloud
+  #   id: Getting certs
+  #   entrypoint: sh
+  #   args:
+  #     - '-c'
+  #     - |
+  #       gcloud beta sql ssl server-ca-certs list --instance=${_INSTANCE_NAME}
 
 options:
   env:

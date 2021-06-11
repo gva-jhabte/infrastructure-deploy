@@ -37,13 +37,6 @@ resource "google_service_networking_connection" "foobar" {
   reserved_peering_ranges = [google_compute_global_address.private_ip_alloc.name]
 }
 
-# making the cloud task queue
-
-resource "google_cloud_tasks_queue" "default" {
-  name = "service-queue"
-  location = "europe-west1"
-  project = var.project
-}
 
 # making the sql instance
 
