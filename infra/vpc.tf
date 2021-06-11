@@ -2,12 +2,12 @@
 
 resource "google_compute_network" "peering_network" {
   name = "peering-network"
-  project = var.project
+  project = var.project_id
 }
 
 resource "google_compute_global_address" "private_ip_alloc" {
   name          = "private-ip-alloc"
-  project       = var.project
+  project       = var.project_id
   purpose       = "VPC_PEERING"
   address_type  = "INTERNAL"
   prefix_length = 16
@@ -16,7 +16,7 @@ resource "google_compute_global_address" "private_ip_alloc" {
 
 resource "google_compute_subnetwork" "subnetwork" {
   name          = "test-subnetwork"
-  project       = var.project
+  project       = var.project_id
   ip_cidr_range = "10.2.0.0/16"
   region        = var.region
   network       = google_compute_network.peering_network.id
@@ -28,7 +28,7 @@ resource "google_compute_subnetwork" "subnetwork" {
 
 resource "google_vpc_access_connector" "connector" {
   name          = "vpc-con"
-  project       = var.project
+  project       = var.project_id
   ip_cidr_range = "10.3.0.0/28"
   network       = google_compute_network.peering_network.name
   region        = var.region
@@ -46,7 +46,7 @@ resource "google_service_networking_connection" "foobar" {
 
 resource "google_sql_database_instance" "master" {
   name             = var.instance_name
-  project          = var.project
+  project          = var.project_id
   database_version = "POSTGRES_12"
   region           = var.region
 

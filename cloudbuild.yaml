@@ -2,7 +2,6 @@ substitutions:
   _REGION: 'europe-west4'
   _STATE_BUCKET_NAME: 'dcsgva-connects-tst-services-state'
   _PROJECT_NUMBER: '938981631422'
-  _PROJECT: 'dcsgva-connects-state'
   _INSTANCE_NAME: state-database
 steps:
   - name: marketplace.gcr.io/google/centos7
@@ -95,11 +94,10 @@ steps:
 
 options:
   env:
-    - 'TF_VAR_project_id=${PROJECT_ID}'
+    - 'TF_VAR_project_id=${_PROJECT_ID}'
     - 'TF_VAR_region=${_REGION}'
     - 'TF_VAR_location=${_LOCATION}'
     - 'TF_VAR_project_number=${_PROJECT_NUMBER}'
-    - 'TF_VAR_project=${_PROJECT}'   
     - 'TF_VAR_instance_name=${_INSTANCE_NAME}'
 
 timeout: 3600s # 60min, overriding the default 10min build timeout
