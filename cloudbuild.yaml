@@ -4,6 +4,7 @@ substitutions:
   _STATE_BUCKET_NAME: 'infrastructure-state'
   _PROJECT_NUMBER: '642161594262'
   _PROJECT: 'dcsgva-lab-sandbox-jonathan'
+  _INSTANCE_NAME: state-database
 steps:
   - name: marketplace.gcr.io/google/centos7
     id: Build information
