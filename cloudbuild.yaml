@@ -63,12 +63,31 @@ steps:
       - plan
     dir: infra
 
-  - name: hashicorp/terraform:0.14.7
-    id: Terraform apply
+  # - name: hashicorp/terraform:0.14.7
+  #   id: Terraform apply
+  #   args:
+  #     - 'apply'
+  #     - '--auto-approve'
+  #   dir: infra
+  
+  # - name: gcr.io/cloud-builders/gcloud
+  #   id: Getting certs
+  #   entrypoint: sh
+  #   args:
+  #     - '-c'
+  #     - |
+  #       gcloud beta sql ssl server-ca-certs list --instance=${_INSTANCE_NAME}
+  #       gcloud beta sql ssl server-ca-certs create --instance=${_INSTANCE_NAME}
+  #       gcloud beta sql ssl server-ca-certs list --format="value(cert)" \
+  #       --instance=${_INSTANCE_NAME} > server-ca.pem
+
+  - name: gcr.io/cloud-builders/gcloud
+    id: Getting certs
+    entrypoint: sh
     args:
-      - 'apply'
-      - '--auto-approve'
-    dir: infra
+      - '-c'
+      - |
+        gcloud beta sql ssl server-ca-certs list --instance=${_INSTANCE_NAME}
 
 options:
   env:
@@ -77,5 +96,6 @@ options:
     - 'TF_VAR_location=${_LOCATION}'
     - 'TF_VAR_project_number=${_PROJECT_NUMBER}'
     - 'TF_VAR_project=${_PROJECT}'   
+    - 'TF_VAR_instance_name=${_INSTANCE_NAME}'
 
 timeout: 3600s # 60min, overriding the default 10min build timeout

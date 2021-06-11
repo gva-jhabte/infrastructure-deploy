@@ -48,7 +48,7 @@ resource "google_cloud_tasks_queue" "default" {
 # making the sql instance
 
 resource "google_sql_database_instance" "master" {
-  name             = "state-database"
+  name             = var.instance_name
   database_version = "POSTGRES_12"
   region           = var.region
 

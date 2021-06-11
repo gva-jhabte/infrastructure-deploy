@@ -9,3 +9,9 @@ variable "region" {
   type        = string
   default       = "europe-west4"
 }
+
+variable "instance_name" {
+  description = "The name of the gcloud instance"
+  type        = string
+  default     = "state-database"
+}
