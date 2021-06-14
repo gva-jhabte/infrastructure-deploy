@@ -28,6 +28,7 @@ resource "google_compute_subnetwork" "subnetwork" {
 
 resource "google_vpc_access_connector" "connector" {
   name          = "vpc-con"
+  provider      = google-beta
   project       = var.project_id
   ip_cidr_range = "10.3.0.0/28"
   network       = google_compute_network.peering_network.name
