@@ -1,9 +1,7 @@
 substitutions:
-  # _LOCATION: 'europe-west2'
   _REGION: 'europe-west4'
-  _STATE_BUCKET_NAME: 'infrastructure-state'
-  _PROJECT_NUMBER: '642161594262'
-  _PROJECT: 'dcsgva-lab-sandbox-jonathan'
+  _STATE_BUCKET_NAME: 'dcsgva-connects-tst-services-state'
+  _PROJECT_NUMBER: '938981631422'
   _INSTANCE_NAME: state-database
 steps:
   - name: marketplace.gcr.io/google/centos7
@@ -64,12 +62,12 @@ steps:
       - plan
     dir: infra
 
-  # - name: hashicorp/terraform:0.14.7
-  #   id: Terraform apply
-  #   args:
-  #     - 'apply'
-  #     - '--auto-approve'
-  #   dir: infra
+  - name: hashicorp/terraform:0.14.7
+    id: Terraform apply
+    args:
+      - 'apply'
+      - '--auto-approve'
+    dir: infra
   
   # - name: gcr.io/cloud-builders/gcloud
   #   id: Getting certs
@@ -81,14 +79,18 @@ steps:
   #       gcloud beta sql ssl server-ca-certs create --instance=${_INSTANCE_NAME}
   #       gcloud beta sql ssl server-ca-certs list --format="value(cert)" \
   #       --instance=${_INSTANCE_NAME} > server-ca.pem
+  #       #
+  #       gcloud sql ssl client-certs create client-cert client-key.pem --instance=${_INSTANCE_NAME}
+  #       gcloud sql ssl client-certs describe client-cert --instance=${_INSTANCE_NAME} --format="value(cert)" > client-cert.pem
+  #       gcloud sql instances describe ${_INSTANCE_NAME} --format="value(serverCaCert.cert)" > server-ca.pem
 
-  - name: gcr.io/cloud-builders/gcloud
-    id: Getting certs
-    entrypoint: sh
-    args:
-      - '-c'
-      - |
-        gcloud beta sql ssl server-ca-certs list --instance=${_INSTANCE_NAME}
+  # - name: gcr.io/cloud-builders/gcloud
+  #   id: Getting certs
+  #   entrypoint: sh
+  #   args:
+  #     - '-c'
+  #     - |
+  #       gcloud beta sql ssl server-ca-certs list --instance=${_INSTANCE_NAME}
 
 options:
   env:
@@ -96,7 +98,6 @@ options:
     - 'TF_VAR_region=${_REGION}'
     - 'TF_VAR_location=${_LOCATION}'
     - 'TF_VAR_project_number=${_PROJECT_NUMBER}'
-    - 'TF_VAR_project=${_PROJECT}'   
     - 'TF_VAR_instance_name=${_INSTANCE_NAME}'
 
 timeout: 3600s # 60min, overriding the default 10min build timeout

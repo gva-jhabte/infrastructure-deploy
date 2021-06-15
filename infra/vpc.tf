@@ -25,6 +25,7 @@ resource "google_compute_subnetwork" "subnetwork" {
 
 resource "google_vpc_access_connector" "connector" {
   name          = "vpc-con"
+  provider      = google-beta
   ip_cidr_range = "10.3.0.0/28"
   network       = google_compute_network.peering_network.name
   region        = var.region
@@ -37,13 +38,6 @@ resource "google_service_networking_connection" "foobar" {
   reserved_peering_ranges = [google_compute_global_address.private_ip_alloc.name]
 }
 
-# making the cloud task queue
-
-resource "google_cloud_tasks_queue" "default" {
-  name = "service-queue"
-  location = "europe-west1"
-  project = var.project
-}
 
 # making the sql instance
 
