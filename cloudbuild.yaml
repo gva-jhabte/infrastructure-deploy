@@ -65,7 +65,7 @@ steps:
   - name: hashicorp/terraform:0.14.7
     id: Terraform apply
     args:
-      - 'apply'
+      - 'destroy'
       - '--auto-approve'
     dir: infra
   
@@ -75,17 +75,16 @@ steps:
   #   args:
   #     - '-c'
   #     - |
-  #       gcloud beta sql ssl server-ca-certs list --instance=${_INSTANCE_NAME}
-  #       gcloud beta sql ssl server-ca-certs create --instance=${_INSTANCE_NAME}
-  #       gcloud beta sql ssl server-ca-certs list --format="value(cert)" \
-  #       --instance=${_INSTANCE_NAME} > server-ca.pem
-  #       #
   #       gcloud sql ssl client-certs create client-cert client-key.pem --instance=${_INSTANCE_NAME}
   #       gcloud sql ssl client-certs describe client-cert --instance=${_INSTANCE_NAME} --format="value(cert)" > client-cert.pem
   #       gcloud sql instances describe ${_INSTANCE_NAME} --format="value(serverCaCert.cert)" > server-ca.pem
+  #       #
+  #       gcloud secrets create clientcert --data-file=client-cert.pem --locations=${_REGION}
+  #       gcloud secrets create serverca --data-file=server-ca.pem --locations=${_REGION}
+  #       gcloud secrets create clientkey --data-file=client-key.pem --locations=${_REGION}
 
   # - name: gcr.io/cloud-builders/gcloud
-  #   id: Getting certs
+  #   id: Creating Secrets
   #   entrypoint: sh
   #   args:
   #     - '-c'
